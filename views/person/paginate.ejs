@@ -1,0 +1,92 @@
+<!--paginate.ejs-->
+<table class="table is-bordered is-striped is-hoverable is-fullwidth">
+
+    <% persons.forEach( function(person) { %>
+
+        <tr>
+            <td>
+                <%= person.name %>
+            </td>
+            <td>
+                <%= person.age %>
+            </td>
+        </tr>
+
+        <% }); %>
+
+</table>
+
+<nav class="pagination" role="navigation" aria-label="pagination">
+    <a class="pagination-previous" id="previousButton">Previous</a>
+    <a class="pagination-next" id="nextButton">Next page</a>
+    <ul class="pagination-list">
+        <li>
+            <a class="pagination-link" id="firstLink">1</a>
+        </li>
+        <li>
+            <span class="pagination-ellipsis">&hellip;</span>
+        </li>
+        <li>
+            <a class="pagination-link" id="previousLink">45</a>
+        </li>
+        <li>
+            <a class="pagination-link is-current" id="currentLink">46</a>
+        </li>
+        <li>
+            <a class="pagination-link" id="nextLink">47</a>
+        </li>
+        <li>
+            <span class="pagination-ellipsis">&hellip;</span>
+        </li>
+        <li>
+            <a class="pagination-link" id="lastLink">86</a>
+        </li>
+    </ul>
+</nav>
+
+<script>
+    function buildLinks() {
+
+        var previousButton = document.getElementById("previousButton");
+        var nextButton = document.getElementById("nextButton");
+        var currentLink = document.getElementById("currentLink");
+        var previousLink = document.getElementById("previousLink");
+        var nextLink = document.getElementById("nextLink");
+        var firstLink = document.getElementById("firstLink");
+        var lastLink = document.getElementById("lastLink");
+
+        var total = parseInt("<%= total %>");
+        var perPage = Math.max(parseInt("<%= req.query.perPage %>"), 2) || 2;
+        var current = Math.max(parseInt("<%= req.query.current %>"), 1) || 1;
+
+        var baseUrl = "/person/paginate?perPage=" + perPage + "&current=";
+
+        firstLink.href = baseUrl + 1;
+        previousButton.href = baseUrl + (current - 1);
+        previousLink.href = baseUrl + (current - 1);
+        currentLink.href = baseUrl + current;
+        nextLink.href = baseUrl + (current + 1);
+        nextButton.href = baseUrl + (current + 1);
+        lastLink.href = baseUrl + Math.ceil(total / perPage);
+
+        previousLink.innerHTML = current - 1;
+        currentLink.innerHTML = current;
+        nextLink.innerHTML = current + 1;
+        lastLink.innerHTML = Math.ceil(total / perPage);
+
+        if (current <= 1) {
+            previousButton.setAttribute("disabled", true);
+            previousButton.href = "";
+            previousLink.style.display = "none";
+        }
+
+        if (current >= Math.ceil(total / perPage)) {
+            nextButton.setAttribute("disabled", true);
+            nextButton.href = "";
+            nextLink.style.display = "none";
+        }
+    }
+
+    buildLinks();
+
+</script>

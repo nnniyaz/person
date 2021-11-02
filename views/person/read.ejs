@@ -1,0 +1,20 @@
+<!--read.ejs-->
+<table class="table is-bordered is-striped is-hoverable is-fullwidth">
+
+    <tr>
+        <td>
+            <%= person.name %>
+        </td>
+        <td>
+            <%= person.age %>
+        </td>
+    </tr>
+
+</table>
+<center>
+    <form action="/person/delete/<%= person.id %>" method="POST">
+        <div class="field">
+            <input type="Submit" class="button is-danger" value="Delete">
+        </div>
+    </form>
+</center>
