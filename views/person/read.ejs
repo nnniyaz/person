@@ -12,9 +12,35 @@
 
 </table>
 <center>
-    <form action="/person/delete/<%= person.id %>" method="POST">
-        <div class="field">
-            <input type="Submit" class="button is-danger" value="Delete">
-        </div>
-    </form>
+    <!-- <form action="/person/delete/<%= person.id %>" method="POST"> -->
+        
+        <button type="button" class="button is-danger" onclick="deletePerson('<%= person.id %>')">Delete</button>
+        
+    <!-- </form> -->
 </center>
+<script>
+    async function deletePerson(id) {
+        var r = confirm("Confirm Delete?");
+        
+        if (r) {
+            var response = await fetch("/person/delete/" + id, {
+                method: "POST"
+            });
+
+            if (response.ok) {
+                // var html = await response.text();
+                // alert(html);
+
+                alert("Person deleted.");
+location.assign("/");
+
+            } else {
+                alert(response.status + ": " + response.statusText);
+            }
+
+        } else {
+            alert("cancelled");
+        }
+    };
+</script>
+
