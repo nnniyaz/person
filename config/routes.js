@@ -31,13 +31,15 @@ module.exports.routes = {
 
   'GET /person/read/:id': 'PersonController.read',
 
-  'POST /person/delete/:id': 'PersonController.delete',
+  // 'POST /person/delete/:id': 'PersonController.delete',
+  'DELETE /person/:id': 'PersonController.delete',
 
   'GET /person/update/:id': 'PersonController.update',
   'POST /person/update/:id': 'PersonController.update',
 
   'GET /person/search': 'PersonController.search',
   'GET /person/paginate': 'PersonController.paginate',
+  'GET /person/aginate': 'PersonController.aginate',
 
   'GET /user': 'UserController.login',
   'GET /user/login': 'UserController.login',
@@ -48,6 +50,7 @@ module.exports.routes = {
   'GET /user/:id/clients': 'UserController.populate',
   'POST /user/:id/clients/add/:fk': 'UserController.add',
   'POST /user/:id/clients/remove/:fk': 'UserController.remove',
+
 
 
   /***************************************************************************

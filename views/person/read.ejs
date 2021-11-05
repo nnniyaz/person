@@ -13,18 +13,18 @@
 </table>
 <center>
     <!-- <form action="/person/delete/<%= person.id %>" method="POST"> -->
-        
-        <button type="button" class="button is-danger" onclick="deletePerson('<%= person.id %>')">Delete</button>
-        
+
+    <button type="button" class="button is-danger" onclick="deletePerson('<%= person.id %>')">Delete</button>
+
     <!-- </form> -->
 </center>
 <script>
     async function deletePerson(id) {
         var r = confirm("Confirm Delete?");
-        
+
         if (r) {
-            var response = await fetch("/person/delete/" + id, {
-                method: "POST"
+            var response = await fetch("/person/" + id, {
+                method: "DELETE",
             });
 
             if (response.ok) {
@@ -32,7 +32,7 @@
                 // alert(html);
 
                 alert("Person deleted.");
-location.assign("/");
+                location.assign("/");
 
             } else {
                 alert(response.status + ": " + response.statusText);
@@ -43,4 +43,3 @@ location.assign("/");
         }
     };
 </script>
-
