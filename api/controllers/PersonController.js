@@ -45,8 +45,13 @@ module.exports = {
 
         if (!deletedPerson) return res.notFound();
 
-        res.redirect('/person/list');
-        return res.ok("Person deleted.");
+        if (req.wantsJSON) {
+            return res.status(204).send();	    // for ajax request
+        } else {
+            return res.redirect('/');			// for normal request
+        }
+
+        // return res.ok("Person deleted.");
     },
     // action - update
     update: async function (req, res) {
@@ -107,6 +112,29 @@ module.exports = {
 
         return res.json(person);
     },
+
+    // action - aginate
+    aginate: async function (req, res) {
+        if (req.wantsJSON) {
+
+            var perPage = Math.max(req.query.perPage, 2) || 2;
+
+            var somePersons = await Person.find({
+                limit: perPage,
+                skip: perPage * (Math.max(req.query.current - 1, 0) || 0)
+            });
+
+            return res.json(somePersons);
+
+        } else {
+
+            var count = await Person.count();
+
+            return res.view('person/aginate', { total: count });
+        }
+        
+    },
+
 
 
 };

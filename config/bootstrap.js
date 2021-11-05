@@ -32,7 +32,7 @@ module.exports.bootstrap = async function () {
 
   await Person.createEach([
     { name: "Martin Choy", age: 23 },
-    { name: "Kenny Cheng", age: 22 }
+    { name: "Kenny Cheng", age: 22 },
     // etc.
   ]);
 
